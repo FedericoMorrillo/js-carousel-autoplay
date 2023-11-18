@@ -28,6 +28,15 @@ function startLoop(){
 
   domItem[currentItem].classList.add("active");
 }
+function startLoopReverse(){
+  domItem[currentItem].classList.remove("active");
+
+  // decrementa currentItem e controlla il modulo per il ciclo circolare
+  //decremento          //ciclo circolare
+  currentItem = (currentItem - 1 + domItem.length) % domItem.length;
+
+  domItem[currentItem].classList.add("active");
+}
 //dichiarazioni***********************************************
 // array di immagini
 const images = ["01.jpg", "02.jpg", "03.jpg", "04.jpg", "05.jpg"];
@@ -49,6 +58,7 @@ let currentItem = 0;
 //buttons
 const start = document.getElementById("start");
 const stop = document.getElementById("stop");
+const startReverse = document.getElementById("start-reverse")
 
 //dichiarazioni**************************************************
 
@@ -140,6 +150,7 @@ next.addEventListener("click", function () {
 });
 let eventoAttivo = true;
 let loop;
+let loopReverse;
 start.addEventListener("click", function(){
   //loop
   if(eventoAttivo){
@@ -147,11 +158,16 @@ start.addEventListener("click", function(){
     eventoAttivo = false;
   }
 });
+startReverse.addEventListener("click", function(){
+  if(eventoAttivo){
+   loopReverse = setInterval(startLoopReverse, 3000);
+   eventoAttivo = false;
+  }
+});
 stop.addEventListener("click", function(){
   if(!eventoAttivo){
     clearInterval(loop);
     eventoAttivo = true;
-  }
-   
+  }  
 });
 
