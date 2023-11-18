@@ -19,7 +19,16 @@ function updateCarousel() {
   // Aggiungiamo la classe "active" alla slide corrente
   items[currentItem].classList.add("active");
 }
+function startLoop(){
+  domItem[currentItem].classList.remove("active");
 
+  // Incrementa currentItem e controlla il modulo per il ciclo circolare
+  //incremento      //ciclo circolare
+  currentItem = (currentItem + 1) % domItem.length;
+
+  domItem[currentItem].classList.add("active");
+}
+//dichiarazioni***********************************************
 // array di immagini
 const images = ["01.jpg", "02.jpg", "03.jpg", "04.jpg", "05.jpg"];
 
@@ -36,6 +45,12 @@ const thumbnails = thumbnailsContainer.querySelectorAll(".thumbnail");
 
 //posizione di partenza del ciclo
 let currentItem = 0;
+
+//buttons
+const start = document.getElementById("start");
+const stop = document.getElementById("stop");
+
+//dichiarazioni**************************************************
 
 //inizio ciclo
 for (let i = 0; i < images.length; i++) {
@@ -114,7 +129,6 @@ prev.addEventListener("click", function () {
 next.addEventListener("click", function () {
   //stampa la posizione della slide corrente
   console.log(currentItem);
-
   domItem[currentItem].classList.remove("active");
 
   // Incrementa currentItem e controlla il modulo per il ciclo circolare
@@ -124,3 +138,20 @@ next.addEventListener("click", function () {
   domItem[currentItem].classList.add("active");
   updateCarousel();
 });
+let eventoAttivo = true;
+let loop;
+start.addEventListener("click", function(){
+  //loop
+  if(eventoAttivo){
+   loop = setInterval(startLoop, 3000);
+    eventoAttivo = false;
+  }
+});
+stop.addEventListener("click", function(){
+  if(!eventoAttivo){
+    clearInterval(loop);
+    eventoAttivo = true;
+  }
+   
+});
+

@@ -6,8 +6,7 @@
 
 .container {
     width: 900px;
-    height: 100vh;
-    margin: 0 auto;
+    margin: 100px auto 30px auto;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -108,3 +107,12 @@
     height: 100%;
     object-fit: cover;
   }
+.buttons{
+  display: flex;
+  flex-direction: row;  
+  justify-content: center;
+}
+.btn{
+    width: 3.125rem;
+    margin: 0 .3125rem;
+}
