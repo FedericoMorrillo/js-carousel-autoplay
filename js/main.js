@@ -1,15 +1,14 @@
 "use strict";
 // funzioni
-function updateCarousel() {
+function thumbnailsActive(){
   // Rimuoviamo la classe active da tutte le miniature
   const thumbnails = document.querySelectorAll(".thumbnail");
   for (let i = 0; i < thumbnails.length; i++) {
-    thumbnails[i].classList.remove("active");
+    thumbnails[i].classList.remove("active", "yellow");
+    thumbnails[currentItem].classList.add("active","yellow");
   }
-
-  // Aggiungiamo la classe "active" alla thumbnail corrente
-  thumbnails[currentItem].classList.add("active");
-
+}
+function updateCarousel() {
   // Rimuoviamo la classe "active" da tutte le slide
   const items = document.querySelectorAll(".item");
   for (let i = 0; i < items.length; i++) {
@@ -27,6 +26,7 @@ function startLoop(){
   currentItem = (currentItem + 1) % domItem.length;
 
   domItem[currentItem].classList.add("active");
+  thumbnailsActive();
 }
 function startLoopReverse(){
   domItem[currentItem].classList.remove("active");
@@ -36,6 +36,7 @@ function startLoopReverse(){
   currentItem = (currentItem - 1 + domItem.length) % domItem.length;
 
   domItem[currentItem].classList.add("active");
+  thumbnailsActive();
 }
 //dichiarazioni***********************************************
 // array di immagini
@@ -123,6 +124,7 @@ console.log(domItem);
 
 //aggiungiamo eventi on click sulle frecce
 prev.addEventListener("click", function () {
+  if(eventoAttivo){
   //stampa la posizione della slide corrente
   console.log(currentItem);
 
@@ -133,10 +135,13 @@ prev.addEventListener("click", function () {
   currentItem = (currentItem - 1 + domItem.length) % domItem.length;
 
   domItem[currentItem].classList.add("active");
+  }
   updateCarousel();
+  thumbnailsActive();
 });
 
 next.addEventListener("click", function () {
+  if(eventoAttivo){
   //stampa la posizione della slide corrente
   console.log(currentItem);
   domItem[currentItem].classList.remove("active");
@@ -146,7 +151,9 @@ next.addEventListener("click", function () {
   currentItem = (currentItem + 1) % domItem.length;
 
   domItem[currentItem].classList.add("active");
+  }
   updateCarousel();
+  thumbnailsActive();
 });
 let eventoAttivo = true;
 let loop;
@@ -155,18 +162,23 @@ start.addEventListener("click", function(){
   //loop
   if(eventoAttivo){
    loop = setInterval(startLoop, 3000);
+   thumbnailsActive();
     eventoAttivo = false;
+
   }
 });
 startReverse.addEventListener("click", function(){
   if(eventoAttivo){
    loopReverse = setInterval(startLoopReverse, 3000);
    eventoAttivo = false;
+   thumbnailsActive();
+   
   }
 });
 stop.addEventListener("click", function(){
   if(!eventoAttivo){
     clearInterval(loop);
+    clearInterval(loopReverse);
     eventoAttivo = true;
   }  
 });
